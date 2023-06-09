@@ -1,9 +1,9 @@
 
 local M ={}
 
-M.ap_cfg = {ssid="MyESP8266", pwd="mypassword"}
+local f = require("module2")
 
-M.flag = false
+M.ap_cfg = {ssid="MyESP8266", pwd="mypassword"}
 
 M.pin = ""
 
@@ -34,30 +34,31 @@ function M.receiver(sck, data)
   local ssid, password = "", ""
   local station_cfg= {ssid= "", pwd = ""}
   M.pin = string.match(data, "pin=([%w_]+)")
-  print("data given", M.pin)
+  print("data given, callback fun running", tmr.now())
   if M.pin == "ON" then gpio.write(4, gpio.LOW) end
   if M.pin == "OFF" then gpio.write(4, gpio.HIGH) end
   ssid, password = string.match(data, "ssid=([^&]+)&password=([^ ]+)")
   
   if ssid and password then
-    M.flag = true
-    print("SSID:", ssid)
-    print("Password:", password)
-    print(type(ssid))
-    print(type(password))
+    f.cfgRcvFlag = true
+    print("SSID:", ssid, type(ssid))
+    print("Password:", password, type(password))
     station_cfg.ssid = ssid
     station_cfg.pwd = password
     M.station_cfg = station_cfg
-    if M.station_cfg.pwd == "kolobok99" then print("PASSWORD IS THE SAME", password)
+    if M.station_cfg.pwd == "kolobok99" then 
+      print("PASSWORD IS THE SAME", M.station_cfg.pwd)
+      print(type(M.station_cfg.pwd))
     else print("PASSWORD IS NOT THE SAME", M.station_cfg.pwd) 
-      print(type(station_cfg.pwd))
+      print(type(M.station_cfg.pwd))
     end
     --data = nil
     
   end
-  print("socket close")
+  print("socket wil be close, cfgRcvFlag set to", f.cfgRcvFlag)
   sck:close()
-end
+--  f.callbackFlag = true
+  end
 
 
 

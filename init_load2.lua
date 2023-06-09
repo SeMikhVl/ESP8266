@@ -1,15 +1,28 @@
 local m = require("module1")
 
-print("AP turn")
-wifi.setmode(wifi.SOFTAP)  -- set Wi-Fi mode to access point
-wifi.ap.config(m.ap_cfg)  -- configure access point with SSID and password
--- server listens on 80, if data received, print data to console and send "hello world" back to caller
--- 30s time out for a inactive client
-print("gpio activate")
-gpio.mode(4,gpio.OUTPUT)
+local f = require("module2")
+
+
+if f.apFlag == false then
+  print("AP turn")
+  wifi.setmode(wifi.SOFTAP)  -- set Wi-Fi mode to access point
+  wifi.ap.config(m.ap_cfg)  -- configure access point with SSID and password
+  f.apFlag = true
+end
+
+
+if f.gpioFlag == false then
+  print("gpio activate")
+  gpio.mode(4,gpio.OUTPUT)
+  f.gpioFlag = true
+end
+
+
 if sv == nil then
    print("server_start") 
    sv = net.createServer(net.TCP, 30)
+-- server listens on 80, if data received, print data to console and send "hello world" back to caller
+-- 30s time out for a inactive client
 end
 
 
@@ -18,13 +31,21 @@ if sv then
     print("**********************")
     conn:send("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" .. m.html)
     print("html sending, client connected")
+    local time = tmr.now()
+    print("time in microseconds", time)
     conn:on("receive", m.receiver)
+--    while f.callbackFlag == false do
+--      local n = 0
+--      n = n + 1
+--    end
     --conn:close()
     --print("close")
     --conn:on("sent", function(client) client:close() end)
-    --net.socket:close()
-    print("flag before sv close:", m.flag)
-    if m.flag == true then 
+    print("i am in initload", tmr.now())
+    --conn:close()
+    if f.cfgRcvFlag == true then
+      print("flag cfgRcv set to True, sv will be close:")
+      f.callbackFlag = true
       sv:close()
       dofile("wifi.lua") end
   end)
