@@ -10,4 +10,6 @@ M.gpioFlag = false
 
 M.callbackFlag = false
 
+M.svLithenFlag = false
+
 return M

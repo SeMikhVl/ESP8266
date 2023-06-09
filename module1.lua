@@ -55,9 +55,11 @@ function M.receiver(sck, data)
     --data = nil
     
   end
-  print("socket wil be close, cfgRcvFlag set to", f.cfgRcvFlag)
+  local ip = sck:getpeer()
+  print("socket", ip, "wil be close, cfgRcvFlag set to", f.cfgRcvFlag)
   sck:close()
 --  f.callbackFlag = true
+  dofile("init_load2.lua")
   end
 
 

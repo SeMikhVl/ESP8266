@@ -26,7 +26,15 @@ if sv == nil then
 end
 
 
-if sv then
+if f.cfgRcvFlag == true then
+  print("flag cfgRcv set to True, sv will be close:")
+  sv:close()
+  f.svLithenFlag = false
+  dofile("wifi.lua") end
+      
+      
+if sv and f.svLithenFlag == false then
+  f.svLithenFlag = true
   sv:listen(80, function(conn)
     print("**********************")
     conn:send("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" .. m.html)
@@ -43,11 +51,6 @@ if sv then
     --conn:on("sent", function(client) client:close() end)
     print("i am in initload", tmr.now())
     --conn:close()
-    if f.cfgRcvFlag == true then
-      print("flag cfgRcv set to True, sv will be close:")
-      f.callbackFlag = true
-      sv:close()
-      dofile("wifi.lua") end
   end)
 end
 
