@@ -31,6 +31,7 @@ if f.cfgRcvFlag == true then
   sv:close()
   sv = nil
   f.svLithenFlag = false
+  f.cfgRcvFlag = false
   dofile("wifi.lua") end
       
       

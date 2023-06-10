@@ -31,6 +31,7 @@ M.html = [[
       </html>
     ]]
 
+M.response = "HTTP/1/1 200 OK\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
 
 function M.receiver(sck, data)
   local ssid, password = "", ""
@@ -59,6 +60,7 @@ function M.receiver(sck, data)
   end
   local ip = sck:getpeer()
   print("socket", ip, "wil be close, cfgRcvFlag set to", f.cfgRcvFlag)
+--  sck:send(M.response)
   sck:close()
 --  f.callbackFlag = true
   dofile("init_load2.lua")
