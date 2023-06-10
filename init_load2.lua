@@ -29,6 +29,7 @@ end
 if f.cfgRcvFlag == true then
   print("flag cfgRcv set to True, sv will be close:")
   sv:close()
+  sv = nil
   f.svLithenFlag = false
   dofile("wifi.lua") end
       

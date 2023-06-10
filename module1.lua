@@ -7,6 +7,8 @@ M.ap_cfg = {ssid="MyESP8266", pwd="mypassword"}
 
 M.pin = ""
 
+M.station_cfg = {}
+
 
 M.html = [[
       <!DOCTYPE html>
