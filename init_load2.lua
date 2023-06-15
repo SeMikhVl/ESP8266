@@ -39,6 +39,7 @@ if sv and f.svLithenFlag == false then
   f.svLithenFlag = true
   sv:listen(80, function(conn)
     print("**********************")
+    print(f.textInfo)
     conn:send("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" .. m.html)
     print("html sending, client connected")
     local time = tmr.now()

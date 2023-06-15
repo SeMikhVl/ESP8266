@@ -10,6 +10,8 @@ M.pin = ""
 M.station_cfg = {}
 
 
+
+
 M.html = [[
       <!DOCTYPE html>
       <html>
@@ -27,6 +29,7 @@ M.html = [[
             <input type="text" name="password" id="password" required><br><br>
             <input type="submit" value="Connect">
           </form>
+          <h1>]] .. f.textInfo .. [[</h1>
         </body>
       </html>
     ]]
@@ -58,8 +61,8 @@ function M.receiver(sck, data)
     --data = nil
     
   end
-  local ip = sck:getpeer()
-  print("socket", ip, "wil be close, cfgRcvFlag set to", f.cfgRcvFlag)
+  local sock, ip = sck:getpeer()
+  print("socket", sock, ip, "wil be close, cfgRcvFlag set to", f.cfgRcvFlag)
 --  sck:send(M.response)
   sck:close()
 --  f.callbackFlag = true

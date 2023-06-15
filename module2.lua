@@ -12,4 +12,8 @@ M.callbackFlag = false
 
 M.svLithenFlag = false
 
+M.ipSTA = ""
+
+M.textInfo = "BUGAGA"
+
 return M

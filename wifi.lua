@@ -44,13 +44,15 @@ local function stopEventReg()
   
 local function handleConnectionSuccess()
   -- Station connected and got an IP address
-  print("Connected to Wi-Fi. IP address: " .. wifi.sta.getip())
+  f.ipSTA = wifi.sta.getip()
+  print("Connected to Wi-Fi. IP address: " .. f.ipSTA)
   -- Additional code or operations here
   
   -- Disable event monitoring
   stopEventReg()
   print(wifi.sta.status())
   wifiFlag = false
+  f.textInfo = "connection success" .. f.ipSTA
   resumeCoroutine()
   end
 
@@ -68,7 +70,10 @@ local function handleConnectionFailure()
     -- Maximum connection attempts reached, disable event monitoring
     print("Maximum connection attempts reached. Disabling event monitoring.")
     stopEventReg()
+    f.textInfo = "failed connecting"
+    print(f.textInfo)
     wifiFlag = false
+    
     resumeCoroutine()
 --    coroutine.yield(co) error call yield across metamethod/c-call boundary
   end
